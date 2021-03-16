@@ -255,6 +255,7 @@ def build_seqex(enc_dict,
     dx_ids = seqex.feature_lists.feature_list['dx_ids']
     dx_ids.feature.add().bytes_list.value.extend(list(set(enc.dx_ids)))
 
+    # A list of the ints mapped to the diagnosis
     dx_int_list = [dx_str2int[item] for item in list(set(enc.dx_ids))]
     dx_ints = seqex.feature_lists.feature_list['dx_ints']
     dx_ints.feature.add().int64_list.value.extend(dx_int_list)
@@ -332,7 +333,8 @@ def count_conditional_prob_dp(seqex_list, output_path, train_key_set=None):
         dp_freqs[dp] += 1
 
     total_visit += 1
-
+ 
+  # Ha! That's frequentist!
   dx_probs = dict([(k, v / float(total_visit)) for k, v in dx_freqs.iteritems()
                   ])
   proc_probs = dict([
